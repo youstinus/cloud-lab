@@ -16,6 +16,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
     5. Sukurtame forke įjungti ir sukonfigūruoti Github Actions. Action'as konfigūruojasi paprastai,
        sukurkite aplanką `.github/workflows`, į jį įdėkite šį failą (pakeisti <JŪSŲ DOCKERHUB USERNAME> į savo) 
        Failo pavadinimas turi būti **release.yml** - **2 balai**
+       **Atkreipkite dėmesį į lygiavimą** Išsaugoję failą galite pasižiūrėti ar lygiavimas tiesingas atsidarę release workflow savo github repo (github.com)
        
        ```yaml
        name: Publish Release
@@ -28,17 +29,17 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
          build:
        
            runs-on: ubuntu-latest
-           
-               steps:
-                 - uses: actions/checkout@v1
-                 - name: Define vars
-                   run: |
-                     echo ${{ github.ref }} | cut -d '/' -f 3 > DOCKER_TAG
-                 - name: Build and push docker image
-                   run: |
-                     docker build --tag <JŪSŲ DOCKERHUB USERNAME>/cloud-lab:$(cat DOCKER_TAG) .
-                     docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_TOKEN }}
-                     docker push <JŪSŲ DOCKERHUB USERNAME>/cloud-lab:$(cat DOCKER_TAG)
+       
+           steps:
+             - uses: actions/checkout@v1
+             - name: Define vars
+               run: |
+                 echo ${{ github.ref }} | cut -d '/' -f 3 > DOCKER_TAG
+             - name: Build and push docker image
+               run: |
+                 docker build --tag <JŪSŲ DOCKERHUB USERNAME>/cloud-lab:$(cat DOCKER_TAG) .
+                 docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_TOKEN }}
+                 docker push <JŪSŲ DOCKERHUB USERNAME>/cloud-lab:$(cat DOCKER_TAG)
         ```
 
     6.  Docker HUB paruošimas - **1 balas**
@@ -61,7 +62,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
    
 4.  API serviso pakeitimai ir deploymentas (3 balai)
       1.  Pridėti papildomą http endpointą į API servisą /{username} [žiūrėti čia](./cmd/api.go) - **1 balas**
-      2.  Naujai pridėtas endpointas turėtų grąžinti Sha256 _username_'o  hashą
+      2.  Naujai pridėtas endpointas turėtų grąžinti Sha256 _username_'o  hashą [žiūrėti čia](./internal/controller/controller.go)
       3.  Pakeitimus išsaugoti savo git repo su git commit ir git push
       4.  Adarykite naują release githube, pavadinkite jį **v0.2**
       5.  Po to, kai github Actions subuildins naują Docker image'ą, atnaujinkinte jį savo kubernetes deploymente su komanda:
