@@ -1,6 +1,6 @@
 FROM golang:1.12-alpine3.9
 
-COPY go /gosrc
+COPY . /gosrc
 WORKDIR /gosrc
 RUN go build -mod=vendor -o api
 

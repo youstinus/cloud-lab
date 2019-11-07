@@ -52,7 +52,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
     8. **Pakeitimus išsaugokite savo github repozitorijoje panaudojant git commit ir git push**
              
 2.  Konteinerizuotos aplikacijos paleidimas Kubernetes clusteryje (1 balas)
-      1. Parsisiųskite kubeconfig'ą su komanda: `curl -X GET -L0 -s https://b79d2d57-c967-4074-948e-3ad103dccedb.lab.cloudcat.online/<JŪSŲ kubernetes namespace vardas>`ci
+      1. Parsisiųskite kubeconfig'ą su komanda: `mkdir ~/.kube && curl -X GET -s https://b79d2d57-c967-4074-948e-3ad103dccedb.lab.cloudcat.online/kubeconfig/<JŪSŲ github username> > ~/.kube/config`
       2. Sukurkite naują release savo github repo, pavadinkite jį v0.1 - **1 balas**
       3. Paruoškite kubernetes manifestus (įrašyti informaciją prie TODO pažymėtų vietų) [žiūrėti čia](./infrastructure/k8s)
       4. Nusiųskite manifestus į kubernetes clusterį su komanda: `kubectl apply -f infrastructure/k8s/` **1 balas**
