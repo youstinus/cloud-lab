@@ -57,7 +57,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
       2. Sukurkite naują release savo github repo, pavadinkite jį v0.1 - **1 balas**
       3. Paruoškite kubernetes manifestus (įrašyti informaciją prie TODO pažymėtų vietų) [žiūrėti čia](./infrastructure/k8s)
       4. Nusiųskite manifestus į kubernetes clusterį su komanda: `kubectl apply -f infrastructure/k8s/` **1 balas**
-      5. Atskirame terminalo lange įvykdykite komandą `kubectl port-forward svc/lab 8080:8080`
+      5. Atskirame terminalo lange įvykdykite komandą `kubectl port-forward svc/lab 8080:80`
       6. Naršyklėje atsidarykite: http://localhost:8080 - tai jūsų aplikacija Kuebrnetes clusteryje. Ji automatiškai tikrinis 4 etapo užduotis ir matysite, kada užduotis bus įvykdyta
    
 4.  API serviso pakeitimai ir deploymentas (3 balai)
@@ -66,7 +66,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
       3.  Pakeitimus išsaugoti savo git repo su git commit ir git push
       4.  Adarykite naują release githube, pavadinkite jį **v0.2**
       5.  Po to, kai github Actions subuildins naują Docker image'ą, atnaujinkinte jį savo kubernetes deploymente su komanda:
-         `kubectl set image deploy app=<jusu dockerhub username/cloud-app:v0.2` - **2 balai**
+         `kubectl set image deploy app=<jusu dockerhub username>/cloud-app:v0.2` - **2 balai**
 
 
  
