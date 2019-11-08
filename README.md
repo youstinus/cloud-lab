@@ -13,7 +13,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
     2. Public key įdėti į savo github paskyrą
     3. Sukurkite tcentric/cloud-lab fork’ą savo github paskyroje - **2 balai**
     4. Nusiklonuokite savo nuforkintą github repo lokaliai su `git clone`. Visi kodo pakeitimai bus daromi lokaliai
-    5. Sukurtame forke įjungti ir sukonfigūruoti Github Actions. Action'as konfigūruojasi paprastai,
+    5. Sukurtame forke įjungti ir sukonfigūruoti Github Actions. Action įsijungia https://github.com/features/actions. Action'as konfigūruojasi paprastai,
        sukurkite aplanką `.github/workflows`, į jį įdėkite šį failą (pakeisti <JŪSŲ DOCKERHUB USERNAME> į savo) 
        Failo pavadinimas turi būti **release.yml** - **2 balai**
        **Atkreipkite dėmesį į lygiavimą** Išsaugoję failą galite pasižiūrėti ar lygiavimas tiesingas atsidarę release workflow savo github repo (github.com)
@@ -46,7 +46,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
         1. Sukurkite repozitoriją "cloud-lab" 
         2. Sugeneruokite personal access token'ą ir **išsaugokite vėlesniam panaudojimui**
                
-    7. Sukonfigūruokite du secret environment variables Github’e 
+    7. Sukonfigūruokite du secret environment variables Github’e. Repo Settings->Secrets.
         1. DOCKER_TOKEN – dockerhub personal token (iš prieš tai buvusio žingsnio)
         2. DOCKER_USER –  dockerhub username 
         
@@ -54,6 +54,7 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
              
 2.  Konteinerizuotos aplikacijos paleidimas Kubernetes clusteryje (1 balas)
       1. Parsisiųskite kubeconfig'ą su komanda: `mkdir ~/.kube && curl -X GET -s https://b79d2d57-c967-4074-948e-3ad103dccedb.lab.cloudcat.online/kubeconfig/<JŪSŲ github username> > ~/.kube/config`
+      Arba `mkdir .kube` einame į vidų `cd .kube` ir parsiunčiame configą `curl -X GET -s https://b79d2d57-c967-4074-948e-3ad103dccedb.lab.cloudcat.online/kubeconfig/<username> -o config`
       2. Sukurkite naują release savo github repo, pavadinkite jį v0.1 - **1 balas**
       3. Paruoškite kubernetes manifestus (įrašyti informaciją prie TODO pažymėtų vietų) [žiūrėti čia](./infrastructure/k8s)
       4. Nusiųskite manifestus į kubernetes clusterį su komanda: `kubectl apply -f infrastructure/k8s/` **1 balas**
@@ -62,16 +63,32 @@ Prieš pradėdami užsiregistruokite laboratoriniam darbui: [čia](https://b79d2
    
 4.  API serviso pakeitimai ir deploymentas (3 balai)
       1.  Pridėti papildomą http endpointą į API servisą /{username} [žiūrėti čia](./cmd/api.go) - **1 balas**
+      Turbūt paredaguoti esamą endpoint iš 'username' į savo username. Toks pat endpoint kviečia du handlerius
       2.  Naujai pridėtas endpointas turėtų grąžinti Sha256 _username_'o  hashą [žiūrėti čia](./internal/controller/controller.go)
       3.  Pakeitimus išsaugoti savo git repo su git commit ir git push
       4.  Adarykite naują release githube, pavadinkite jį **v0.2**
       5.  Po to, kai github Actions subuildins naują Docker image'ą, atnaujinkinte jį savo kubernetes deploymente su komanda:
-         `kubectl set image deploy app=<jusu dockerhub username>/cloud-app:v0.2` - **2 balai**
+         `kubectl set image deploy lab app=<DOCKER_USER>/cloud-lab:v0.2` - **2 balai**
 
+5.  Commands used during deployment:
 
- 
-        
-    
-   
+```
+installs necesary files:
+sudo snap install kubectl --classic
+sudo apt install curl
 
+environmental variable KUBECONFIG:
+Linux:
+unset KUBECONFIG
+export KUBECONFIG=$KUBECONFIG:$HOME/Desktop/kube/cloud-lab/cloud-lab/.kube/config
 
+shows config in current directory from \.kube\config file
+kubectl config view --kubeconfig='.kube\config' | grep namespace
+
+kubectl apply -f infrastructure\k8s\
+kubectl port-forward svc/lab 8080:80
+
+kubectl get pod
+kubectl set image deploy lab app=youstinus/cloud-lab:v0.2
+
+```
