@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/spf13/cobra"
-	"github.com/tcentric/cloud-lab/internal/controller"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gorilla/mux"
+	"github.com/spf13/cobra"
+	"github.com/tcentric/cloud-lab/internal/controller"
 )
 
 var httpServerCmd = &cobra.Command{
@@ -22,6 +23,7 @@ func server() {
 	logger := log.New(os.Stdout, "[api] ", log.Ltime)
 	r := mux.NewRouter()
 	r.HandleFunc("/username", controller.GithubUsernameHandler).Methods("GET")
+	r.HandleFunc("/youstinus", controller.Sha256Handler).Methods("GET")
 
 	// TODO. Add a handler here which will use controller.Sha256Handler function for HTTP "GET" method. Use curly brackets for path matching, like this: /{username}
 
