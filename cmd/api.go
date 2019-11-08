@@ -22,7 +22,7 @@ var httpServerCmd = &cobra.Command{
 func server() {
 	logger := log.New(os.Stdout, "[api] ", log.Ltime)
 	r := mux.NewRouter()
-	r.HandleFunc("/youstinus", controller.GithubUsernameHandler).Methods("GET")
+	r.HandleFunc("/username", controller.GithubUsernameHandler).Methods("GET")
 	r.HandleFunc("/youstinus", controller.Sha256Handler).Methods("GET")
 
 	// TODO. Add a handler here which will use controller.Sha256Handler function for HTTP "GET" method. Use curly brackets for path matching, like this: /{username}
