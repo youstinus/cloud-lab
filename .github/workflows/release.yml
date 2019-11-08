@@ -19,3 +19,4 @@ jobs:
           docker build --tag youstinus/cloud-lab:$(cat DOCKER_TAG) .
           docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets.DOCKER_TOKEN }}
           docker push youstinus/cloud-lab:$(cat DOCKER_TAG)
+          
