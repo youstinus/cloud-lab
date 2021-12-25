@@ -6,7 +6,8 @@ RUN go build -mod=vendor -o api
 
 FROM alpine:3.9
 # TODO. Change this email to yours!
-LABEL maintainer="tomas.adomavicius@centric.eu"
+# tomas.adomavicius@centric.eu
+LABEL maintainer="youstinus@example.com"
 
 RUN apk --no-cache add ca-certificates
 WORKDIR /api
